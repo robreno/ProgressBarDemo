@@ -10,7 +10,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
-            <x:String x:Key="audioUri">https://github.com/robreno/robreno.github.io/raw/main/Audio/teapot.mp3</x:String>
+            <x:String x:Key="audioUri">https://github.com/robreno/robreno.github.io/raw/main/Audio/000.mp3</x:String>
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -27,16 +27,26 @@
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
-        <ProgressBar x:Name="progressBar"
-                     MinimumWidthRequest="200"
-                     MinimumHeightRequest="5"
-                     MaximumWidthRequest="450">
-            <ProgressBar.Behaviors>
-                <mct:ProgressBarAnimationBehavior
-                    Length="50"
-                    Progress="{Binding Progress}"/>
-            </ProgressBar.Behaviors>
-        </ProgressBar>
+        <VerticalStackLayout x:Name="progressBarVSL"
+                             IsVisible="False">
+
+            <Label x:Name="progressBarLabel"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Start"
+                   Margin="10"
+                   Text="{Binding ProgressBarText}"/>
+            
+            <ProgressBar x:Name="progressBar"
+                         MinimumWidthRequest="200"
+                         MinimumHeightRequest="5"
+                         MaximumWidthRequest="450">
+                <ProgressBar.Behaviors>
+                    <mct:ProgressBarAnimationBehavior Length="50"
+                                                      Progress="{Binding Progress}" />
+                </ProgressBar.Behaviors>
+            </ProgressBar>
+
+        </VerticalStackLayout>
 
         <Button x:Name="Download"
                 Text="Download Audio"
