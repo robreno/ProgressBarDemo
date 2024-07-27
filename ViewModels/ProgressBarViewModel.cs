@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using System.Windows.Input;
+using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Core;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -44,6 +47,20 @@ public partial class ProgressBarViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    async Task ProgressBarPageLoaded(string audioUri)
+    {
+        string _method = "ProgressBarPageLoaded";
+        try
+        {
+
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+    }
+
+    [RelayCommand]
     async Task DownloadAudio(string url)
     {
         string _method = "DownloadAudio";
@@ -66,16 +83,25 @@ public partial class ProgressBarViewModel : BaseViewModel
         string _method = "DownloadFileAsync";
         try
         {
-            var filePathName  = Path.Combine(FileSystem.Current.AppDataDirectory, "000.mp3");
+            var urlArr = url.Split(@"/");
+            var len = urlArr.Length;
+            var fileName = urlArr[len - 1];
 
-            var progress = new Progress<float>(percentComplete =>
+            var filePathName  = Path.Combine(FileSystem.Current.AppDataDirectory, fileName);
+
+            var progress = new Progress<float>(async percentComplete =>
             {
                 // Update your UI progress bar or other UI elements here
                 Progress = percentComplete;
                 if (Progress == 1.0)
+                {
                     ProgressBarText = $"Downloading Complete ...";
+                    await SendToastAsync("Download Completed Successfully!");
+                }
                 else
+                {
                     ProgressBarText = $"Downloading File ...";
+                }
             });
 
             using (var httpClient = new HttpClient())
@@ -86,6 +112,31 @@ public partial class ProgressBarViewModel : BaseViewModel
         catch (Exception ex)
         {
             await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+        }
+    }
+
+    /// <summary>
+    /// SendToastAsync
+    /// </summary>
+    /// <param name="message"></param>
+    /// <returns></returns>
+    private async Task SendToastAsync(string message)
+    {
+        string _method = "SendToast";
+        try
+        {
+            using (CancellationTokenSource cancellationTokenSource = new CancellationTokenSource())
+            {
+                ToastDuration duration = ToastDuration.Short;
+                double fontSize = 14;
+                var toast = Toast.Make(message, duration, fontSize);
+                await toast.Show(cancellationTokenSource.Token);
+            }
+        }
+        catch (Exception ex)
+        {
+            await App.Current.MainPage.DisplayAlert($"Exception raised in {_class}.{_method} => ", ex.Message, "Ok");
+            return;
         }
     }
 }

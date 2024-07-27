@@ -20,7 +20,9 @@
                                     CommandParameter="{x:StaticResource audioUri}" />
     </ContentPage.Behaviors>
 
-    <VerticalStackLayout>
+    <VerticalStackLayout x:Name="mainVSL"
+                         HeightRequest="800"
+                         MinimumHeightRequest="700">
         <Label 
             Text="Welcome to .NET MAUI!"
             Margin="20"
@@ -28,6 +30,7 @@
             HorizontalOptions="Center" />
 
         <VerticalStackLayout x:Name="progressBarVSL"
+                             VerticalOptions="End"
                              IsVisible="False">
 
             <Label x:Name="progressBarLabel"
