@@ -23,26 +23,28 @@
     <VerticalStackLayout>
         <Label 
             Text="Welcome to .NET MAUI!"
+            Margin="20"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
 
-        <ProgressBar>
+        <ProgressBar x:Name="progressBar"
+                     MinimumWidthRequest="200"
+                     MinimumHeightRequest="5"
+                     MaximumWidthRequest="450">
             <ProgressBar.Behaviors>
                 <mct:ProgressBarAnimationBehavior
-                    x:Name="progressBar"
-                    Progress="{Binding Progress}"
-                    Length="250"/>
+                    Length="50"
+                    Progress="{Binding Progress}"/>
             </ProgressBar.Behaviors>
         </ProgressBar>
 
         <Button x:Name="Download"
                 Text="Download Audio"
                 Margin="20"
+                HorizontalOptions="Center"
                 SemanticProperties.Hint="Download file"
                 Command="{Binding DownloadAudioCommand}"
-                CommandParameter="{x:StaticResource audioUri}"
-                MinimumWidthRequest="200"
-                HorizontalOptions="Center" />
+                CommandParameter="{x:StaticResource audioUri}" />
 
     </VerticalStackLayout>
     
