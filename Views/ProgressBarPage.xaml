@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:ProgressBarDemo.ViewModels"
+             xmlns:local="clr-namespace:ProgressBarDemo.Views"
+             x:Class="ProgressBarDemo.Views.ProgressBarPage"
+             Title="ProgressBarPage"
+             x:DataType="vm:ProgressBarViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="audioUri">https://github.com/robreno/robreno.github.io/raw/main/Audio/teapot.mp3</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior EventName="Appearing"
+                                    Command="{Binding ProgressBarPageAppearingCommand}"
+                                    CommandParameter="{x:StaticResource audioUri}" />
+    </ContentPage.Behaviors>
+
+    <VerticalStackLayout>
+        <Label 
+            Text="Welcome to .NET MAUI!"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center" />
+
+        <ProgressBar>
+            <ProgressBar.Behaviors>
+                <mct:ProgressBarAnimationBehavior
+                    x:Name="progressBar"
+                    Progress="{Binding Progress}"
+                    Length="250"/>
+            </ProgressBar.Behaviors>
+        </ProgressBar>
+
+        <Button x:Name="Download"
+                Text="Download Audio"
+                Margin="20"
+                SemanticProperties.Hint="Download file"
+                Command="{Binding DownloadAudioCommand}"
+                CommandParameter="{x:StaticResource audioUri}"
+                MinimumWidthRequest="200"
+                HorizontalOptions="Center" />
+
+    </VerticalStackLayout>
+    
+</ContentPage>

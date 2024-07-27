@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             xmlns:vm="clr-namespace:ProgressBarDemo.ViewModels"
+             xmlns:local="clr-namespace:ProgressBarDemo.Views"
+             x:Class="ProgressBarDemo.MainPage"
+             x:DataType="vm:MainViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <x:String x:Key="audioUri">https://github.com/robreno/robreno.github.io/raw/main/Audio/teapot.mp3</x:String>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Behaviors>
+        <mct:EventToCommandBehavior EventName="Appearing"
+                                    Command="{Binding MainPageAppearingCommand}"
+                                    CommandParameter="{x:StaticResource audioUri}"/>
+    </ContentPage.Behaviors>
+
+    <ScrollView>
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+            
+            <Image
+                Source="dotnet_bot.png"
+                HeightRequest="185"
+                Aspect="AspectFit"
+                SemanticProperties.Description="dot net bot in a race car number eight" />
+
+            <Label Text="Let's Use a ProgressBar Control!"
+                   Style="{StaticResource Headline}"
+                   SemanticProperties.HeadingLevel="Level1" />
+
+            <Button
+                x:Name="DowloadBtn"
+                Text="Goto Dowload Page" 
+                SemanticProperties.Hint="Navigates to download page"
+                Command="{Binding NavigateToCommand}"
+                CommandParameter="ProgressBarPage"
+                HorizontalOptions="Fill" />
+            
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>
